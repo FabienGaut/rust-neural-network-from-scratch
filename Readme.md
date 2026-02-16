@@ -1,6 +1,6 @@
 # Rust Neural Network from Scratch
 
-A lightweight, dependency-minimal implementation of a Multi-Layer Perceptron (MLP) in Rust. This project demonstrates the fundamental mathematics of Deep Learning, including vector-based operations, activation functions, and the backpropagation algorithm — trained on real stock market data (Meta/Facebook).
+A lightweight, dependency-minimal implementation of a Multi-Layer Perceptron (MLP) in Rust. This project demonstrates the fundamental mathematics of Deep Learning, including vector-based operations, activation functions, and the backpropagation algorithm.
 
 ## Features
 
@@ -16,7 +16,7 @@ A lightweight, dependency-minimal implementation of a Multi-Layer Perceptron (ML
 The default configuration uses Meta stock data (Open, High, Low, Close) to predict Volume:
 
 ```
-Input (4) → Hidden (16, ReLU) → Hidden (8, ReLU) → Output (1, Sigmoid)
+Input (4) → Hidden (16, ReLU) → Hidden (10, ReLU) → Output (1, Sigmoid)
 ```
 
 ```mermaid
