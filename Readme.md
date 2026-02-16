@@ -13,35 +13,35 @@ A lightweight, dependency-minimal implementation of a Multi-Layer Perceptron (ML
 
 ## Network Architecture
 
-The default configuration uses Meta stock data (Open, High, Low, Close) to predict Volume:
+The default configuration uses synthetic data with 4 input features to predict 1 output:
 
 ```
-Input (4) → Hidden (16, ReLU) → Hidden (10, ReLU) → Output (1, Sigmoid)
+Input (4) → Hidden (16, Leaky ReLU) → Hidden (10, Leaky ReLU) → Output (1, Identity)
 ```
 
 ```mermaid
 graph LR
     subgraph Input Layer - 4 neurons
-        x1["Open"]
-        x2["High"]
-        x3["Low"]
-        x4["Close"]
+        x1["x1"]
+        x2["x2"]
+        x3["x3"]
+        x4["x4"]
     end
 
     subgraph Hidden Layer 1 - 16 neurons
-        h1["ReLU"]
-        h2["ReLU"]
+        h1["Leaky ReLU"]
+        h2["Leaky ReLU"]
         h3["..."]
     end
 
-    subgraph Hidden Layer 2 - 8 neurons
-        h4["ReLU"]
-        h5["ReLU"]
+    subgraph Hidden Layer 2 - 10 neurons
+        h4["Leaky ReLU"]
+        h5["Leaky ReLU"]
         h6["..."]
     end
 
     subgraph Output Layer - 1 neuron
-        o1["Sigmoid → Volume"]
+        o1["Identity → Output"]
     end
 
     x1 & x2 & x3 & x4 --> h1 & h2 & h3
@@ -119,25 +119,25 @@ w_new = w_old - learning_rate * (accumulated_gradient / batch_size)
 ## Sample Output
 
 ```
-Loaded 3455 samples from meta_stock_data.csv
-Training on 2764 samples, Testing on 691 samples...
-Epoch 0 | Train MSE: 0.020948
-Epoch 100 | Train MSE: 0.001288
+Loaded 1500 samples from data/synthetic_data.csv
+Training on 1200 samples, Testing on 300 samples...
+Epoch 0 | Train MSE: 0.034394
+Epoch 100 | Train MSE: 0.000844
 ...
-Epoch 1000 | Train MSE: 0.001263
+Epoch 1000 | Train MSE: 0.000554
 
-Final Test MSE: 0.002386
+Final Test MSE: 0.000599
 
 Sample Predictions:
-Target: 0.0374 | Predicted: 0.0395
-Target: 0.0128 | Predicted: 0.0149
-Target: 0.1073 | Predicted: 0.0728
+Target: 0.2432 | Predicted: 0.2396
+Target: 0.4294 | Predicted: 0.4523
+Target: 0.9433 | Predicted: 0.9182
 ```
 
 ## How to Run
 
 1. Ensure you have Rust and Cargo installed.
-2. Place a CSV file (e.g. `meta_stock_data.csv`) in the project root.
+2. Place a CSV file (e.g. `synthetic_data.csv`) in the `data/` directory.
 3. Run:
 
 ```bash
@@ -155,4 +155,4 @@ cargo run
 
 - **Weight Initialization:** Random uniform values in [-1, 1]. Never initialize to zero — it prevents symmetry breaking.
 - **Biases** start at 0, which is safe since weights already break symmetry.
-- **Activation choice matters:** ReLU for hidden layers (fast, avoids vanishing gradients), Sigmoid for output (bounded [0, 1] for normalized targets).
+- **Activation choice matters:** Leaky ReLU for hidden layers (fast, avoids vanishing gradients and dead neurons), Identity for output (unbounded, suitable for regression).
