@@ -1,15 +1,5 @@
-use std::error::Error;
-use std::fs::File;
-use std::io::{BufReader, BufWriter};
-use serde::{Serialize, Deserialize};
 use crate::activation::Activation;
 use crate::layer::Layer;
-
-#[derive(Serialize, Deserialize)]
-struct LayerData {
-    weights: Vec<f32>,
-    biases: Vec<f32>,
-}
 
 pub struct NeuralNetwork {
     layers: Vec<Layer>,
